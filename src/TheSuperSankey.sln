@@ -30,6 +30,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Sankey.Web", "Web\Sankey.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sankey.API", "Services\Sankey.API\Sankey.API.csproj", "{7DA91E39-03DB-4079-B66E-393F801D783E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sankey.Infrastructure", "Sankey.Infrastructure\Sankey.Infrastructure.csproj", "{DF90D220-64B6-45B4-837E-4C2446F56ECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sankey.Domain", "Sankey.Domain\Sankey.Domain.csproj", "{DB1B3938-970A-4BA7-BE90-E4CB90A8CE9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{7DA91E39-03DB-4079-B66E-393F801D783E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DA91E39-03DB-4079-B66E-393F801D783E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DA91E39-03DB-4079-B66E-393F801D783E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF90D220-64B6-45B4-837E-4C2446F56ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF90D220-64B6-45B4-837E-4C2446F56ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF90D220-64B6-45B4-837E-4C2446F56ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF90D220-64B6-45B4-837E-4C2446F56ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB1B3938-970A-4BA7-BE90-E4CB90A8CE9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB1B3938-970A-4BA7-BE90-E4CB90A8CE9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB1B3938-970A-4BA7-BE90-E4CB90A8CE9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB1B3938-970A-4BA7-BE90-E4CB90A8CE9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +63,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{57631FCB-C02A-4926-94A0-26C64E5217F5} = {21C2FC32-E5C6-4079-9817-D0A9293FD88C}
 		{7DA91E39-03DB-4079-B66E-393F801D783E} = {507FB151-EBE2-4B31-AF93-69DE90ACE934}
+		{DF90D220-64B6-45B4-837E-4C2446F56ECE} = {507FB151-EBE2-4B31-AF93-69DE90ACE934}
+		{DB1B3938-970A-4BA7-BE90-E4CB90A8CE9F} = {507FB151-EBE2-4B31-AF93-69DE90ACE934}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1929AC4E-D2E1-4075-A657-634960753157}
