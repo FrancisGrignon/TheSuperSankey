@@ -14,15 +14,18 @@ namespace Sankey.Infrastructure.EntityConfigurations
 
             builder.HasOne(ci => ci.Source)
                 .WithMany()
-                .HasForeignKey(ci => ci.SourceId);
+                .HasForeignKey(ci => ci.SourceId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(ci => ci.Geo)
                 .WithMany()
-                .HasForeignKey(ci => ci.GeoId);
+                .HasForeignKey(ci => ci.GeoId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(ci => ci.Target)
                 .WithMany()
-                .HasForeignKey(ci => ci.TargetId);
+                .HasForeignKey(ci => ci.TargetId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(ci => ci.Id)
                 .IsRequired();

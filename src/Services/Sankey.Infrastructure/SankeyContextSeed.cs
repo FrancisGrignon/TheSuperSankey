@@ -14,19 +14,19 @@ namespace Sankey.Infrastructure
             if (false == context.Geos.Any())
             {
                 context.Geos.AddRange(GetGeosFromFile(contentRootPath, logger));
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
 
             if (false == context.Nodes.Any())
             {
                 context.Nodes.AddRange(GetNodesFromFile(contentRootPath, logger));
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
 
             if (false == context.Flows.Any())
             {
                 context.Flows.AddRange(GetFlowsFromFile(contentRootPath, logger, context));
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
 
@@ -121,7 +121,8 @@ namespace Sankey.Infrastructure
                 Geo = context.Geos.Where(p => p.NameEn.Equals(colums[1])).SingleOrDefault(),
                 Source = context.Nodes.Where(p => p.NameEn.Equals(colums[2])).SingleOrDefault(),
                 Target = context.Nodes.Where(p => p.NameEn.Equals(colums[3])).SingleOrDefault(),
-                Value = Convert.ToInt32(colums[4])
+                Value = Convert.ToInt32(colums[4]),
+                Tag = colums[5]
             };
         }   
 

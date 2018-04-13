@@ -33,7 +33,7 @@ namespace Sankey.API.Controllers
 
         // GET api/flows/ca-qc/2015/all/fr
         [HttpGet("{geo}/{year:int}/{tag?}/{language?}")]
-        public async Task<FlowViewModel> Get(string geo, int year, string tag="all", string language = "en")
+        public async Task<FlowViewModel> Get(string geo, int year, string tag="root", string language = "en")
         {
             var location = await _context.Geos.Where(p => p.Iso3166.Equals(geo)).SingleOrDefaultAsync();
             var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.GeoId.Equals(location.Id) && p.Year.Equals(year) && p.Tag.Equals(tag)).ToArrayAsync();
