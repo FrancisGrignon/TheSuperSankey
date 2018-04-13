@@ -12,26 +12,30 @@ namespace Sankey.Infrastructure.EntityConfigurations
 
             builder.HasKey(ci => ci.Id);
 
-            builder.HasOne(ci => ci.Fuel)
+            builder.HasOne(ci => ci.Source)
                 .WithMany()
-                .HasForeignKey(ci => ci.FuelId);
+                .HasForeignKey(ci => ci.SourceId);
 
             builder.HasOne(ci => ci.Geo)
                 .WithMany()
                 .HasForeignKey(ci => ci.GeoId);
 
-            builder.HasOne(ci => ci.Supply)
+            builder.HasOne(ci => ci.Target)
                 .WithMany()
-                .HasForeignKey(ci => ci.SupplyId);
+                .HasForeignKey(ci => ci.TargetId);
 
             builder.Property(ci => ci.Id)
-               .IsRequired();
+                .IsRequired();
 
             builder.Property(ci => ci.Value)
-               .IsRequired();
+                .IsRequired();
 
             builder.Property(ci => ci.Year)
-               .IsRequired();
+                .IsRequired();
+
+            builder.Property(ci => ci.Tag)
+                .IsRequired(true)
+                .HasMaxLength(255);
         }
     }
 }

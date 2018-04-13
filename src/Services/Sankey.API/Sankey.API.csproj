@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Sankey.Domain\Sankey.Domain.csproj" />
-    <ProjectReference Include="..\..\Sankey.Infrastructure\Sankey.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\WebHost.Customization\WebHost.Customization.csproj" />
+    <ProjectReference Include="..\Sankey.Domain\Sankey.Domain.csproj" />
+    <ProjectReference Include="..\Sankey.Infrastructure\Sankey.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

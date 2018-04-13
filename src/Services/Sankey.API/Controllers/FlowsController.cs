@@ -22,7 +22,7 @@ namespace Sankey.API.Controllers
 
         // GET api/flows/ca-qc/2015/fr
         [HttpGet("{id}")]
-        public IEnumerable<FlowViewModel> Get(string geo, int year, string language = "en")
+        public IEnumerable<FlowViewModel> Get(string geo, int year, string language = "en", string tag="all")
         {
             return new FlowViewModel[] { new FlowViewModel() };
         }

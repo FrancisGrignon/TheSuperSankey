@@ -1,3 +1,16 @@
-﻿english;french;alpha2
+﻿english;french;iso3166
 Canada;Canada;CA
 Québec;Québec;CA-QC
+Alberta;Alberta;CA-AB
+British Columbia;Colombie-Britannique;CA-BC
+Manitoba;Manitoba;CA-MB
+New Brunswick;Nouveau-Brunswick;CA-NB
+Newfoundland and Labrador;Terre-Neuve-et-Labrador;CA-NL
+Nova Scotia;Nouvelle-Écosse;CA-NS
+Ontario;Ontario;CA-ON
+Prince Edward Island;Île-du-Prince-Édouard;CA-PE
+Quebec;Québec;CA-QC
+Saskatchewan;Saskatchewan;CA-SK
+Northwest Territories;Territoires du Nord-Ouest;CA-NT
+Nunavut;Nunavut;CA-NU
+Yukon Territory;Territoire du Yukon;CA-YT

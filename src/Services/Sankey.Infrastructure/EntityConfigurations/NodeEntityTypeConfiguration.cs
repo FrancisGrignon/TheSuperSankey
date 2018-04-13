@@ -4,11 +4,11 @@ using Sankey.Domain.Models;
 
 namespace Sankey.Infrastructure.EntityConfigurations
 {
-    public class GeoEntityTypeConfiguration : IEntityTypeConfiguration<Geo>
+    public class NodeEntityTypeConfiguration : IEntityTypeConfiguration<Node>
     {
-        public void Configure(EntityTypeBuilder<Geo> builder)
+        public void Configure(EntityTypeBuilder<Node> builder)
         {
-            builder.ToTable("Fuel");
+            builder.ToTable("Node");
 
             builder.HasKey(ci => ci.Id);
 
@@ -19,10 +19,6 @@ namespace Sankey.Infrastructure.EntityConfigurations
             builder.Property(ci => ci.NameFr)
                 .IsRequired(true)
                 .HasMaxLength(255);
-
-            builder.Property(ci => ci.Alpha2)
-                .IsRequired(true)
-                .HasMaxLength(5);
 
             builder.Property(ci => ci.Id)
                .IsRequired();
