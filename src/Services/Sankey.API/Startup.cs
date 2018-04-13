@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Sankey.Infrastructure;
 
 namespace Sankey.API
@@ -28,6 +22,20 @@ namespace Sankey.API
             services.AddDbContext<SankeyContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.Configure<SankeySettings>(Configuration);
+
+            services.AddSwaggerGen(options =>
+            {
+                options.DescribeAllEnumsAsStrings();
+                options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                {
+                    Title = "TheSuperSankey API V1",
+                    Version = "v1",
+                    Description = "The Super Sankey API V1. Provide data to create Energy Sankey",
+                    TermsOfService = "Terms Of Service"
+                });
+            });
+
             services.AddMvc();
         }
 
@@ -38,6 +46,12 @@ namespace Sankey.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger()
+              .UseSwaggerUI(c =>
+              {
+                  c.SwaggerEndpoint("/swagger/v1/swagger.json", "TheSuperSankey API V1");
+              });
 
             app.UseMvc();
         }

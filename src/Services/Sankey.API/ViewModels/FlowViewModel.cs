@@ -8,6 +8,6 @@ namespace Sankey.API.ViewModels
 
         public int Year { get; set; }
 
-        public List<FlowItemViewModel­> Data { get; set; }
+        public FlowItemViewModel[] Data { get; set; }
     }
 }

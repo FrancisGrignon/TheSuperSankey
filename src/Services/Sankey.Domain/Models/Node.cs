@@ -1,6 +1,6 @@
 ﻿namespace Sankey.Domain.Models
 {
-    public class Node : IEntity
+    public class Node : IEntity, ICodeset
     {
         public int Id { get; set; }
 

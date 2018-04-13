@@ -8,7 +8,7 @@ namespace Sankey.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Geo> builder)
         {
-            builder.ToTable("Fuel");
+            builder.ToTable("Geo");
 
             builder.HasKey(ci => ci.Id);
 
