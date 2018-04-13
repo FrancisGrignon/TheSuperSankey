@@ -38,6 +38,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHost.Customization", "BuildingBlocks\WebHost.Customization\WebHost.Customization.csproj", "{1F50E8F8-7D84-44E9-9A4E-5CECACD6323A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sankey.Database", "Sankey.Database", "{299A8372-BDF3-4971-994B-860C926BC1D2}"
+	ProjectSection(SolutionItems) = preProject
+		Services\Sankey.Database\Dockerfile = Services\Sankey.Database\Dockerfile
+		Services\Sankey.Database\Initialize-Database.ps1 = Services\Sankey.Database\Initialize-Database.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +80,7 @@ Global
 		{D1C96777-9593-481A-8165-C3D627E710EB} = {507FB151-EBE2-4B31-AF93-69DE90ACE934}
 		{3A49BB6C-EC8A-4658-83CD-B693EC2712CC} = {507FB151-EBE2-4B31-AF93-69DE90ACE934}
 		{1F50E8F8-7D84-44E9-9A4E-5CECACD6323A} = {BAB93B80-A778-4D5B-9C15-F913FF381BAA}
+		{299A8372-BDF3-4971-994B-860C926BC1D2} = {507FB151-EBE2-4B31-AF93-69DE90ACE934}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1929AC4E-D2E1-4075-A657-634960753157}
