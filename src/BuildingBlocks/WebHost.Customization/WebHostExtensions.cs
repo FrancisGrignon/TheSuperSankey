@@ -7,7 +7,7 @@ namespace Microsoft.AspNetCore.Hosting
 {
     public static class IWebHostExtensions
     {
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext,IServiceProvider> seeder) where TContext : DbContext
+        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider> seeder) where TContext : DbContext
         {
             using (var scope = webHost.Services.CreateScope())
             {
@@ -19,12 +19,15 @@ namespace Microsoft.AspNetCore.Hosting
 
                 try
                 {
+                    logger.LogInformation($"Droppring database associated with context {typeof(TContext).Name}");
+
+                    context.Database.EnsureDeleted();
+
                     logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
 
-                    context.Database
-                        .Migrate();
+                    context.Database.Migrate();
 
-                    seeder(context,services);
+                    seeder(context, services);
 
                     logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
                 }

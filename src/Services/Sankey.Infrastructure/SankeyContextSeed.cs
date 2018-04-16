@@ -115,38 +115,89 @@ namespace Sankey.Infrastructure
         {
             string[] colums = row.Split(";");
 
-            return new Flow
+            try
             {
-                Year = Convert.ToInt32(colums[0]),
-                Geo = context.Geos.Where(p => p.NameEn.Equals(colums[1])).SingleOrDefault(),
-                Source = context.Nodes.Where(p => p.NameEn.Equals(colums[2])).SingleOrDefault(),
-                Target = context.Nodes.Where(p => p.NameEn.Equals(colums[3])).SingleOrDefault(),
-                Value = Convert.ToInt32(colums[4]),
-                Tag = colums[5]
-            };
+                var sourceName = colums[0].Trim();
+                var source = context.Nodes.Where(p => p.NameEn.Equals(sourceName)).SingleOrDefault();
+
+                if (null == source)
+                {
+                    source = new Node
+                    {
+                        NameEn = sourceName,
+                        NameFr = sourceName
+                    };
+                }
+
+                var targetName = colums[1].Trim();
+                var target = context.Nodes.Where(p => p.NameEn.Equals(targetName)).SingleOrDefault();
+
+                if (null == target)
+                {
+                    target = new Node
+                    {
+                        NameEn = targetName,
+                        NameFr = targetName
+                    };
+                }
+
+                return new Flow
+                {
+                    Source = source,
+                    Target = target,
+                    Value = Convert.ToInt32(colums[2]),
+                    Year = Convert.ToInt32(colums[3]),
+                    Geo = context.Geos.Where(p => p.NameEn.Equals(colums[4])).SingleOrDefault(),
+                    Tag = colums[5]
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message} on flow {row}.");
+            }
+
+            return null;
         }   
 
         private Geo CreateGeo(string row)
         {
             string[] colums = row.Split(";");
 
-            return new Geo
+            try
             {
-                NameEn = colums[0],
-                NameFr = colums[1],
-                Iso3166 = colums[2],
-            };
+                return new Geo
+                {
+                    NameEn = colums[0],
+                    NameFr = colums[1],
+                    Iso3166 = colums[2],
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message} on geo {row}.");
+            }
+
+            return null;
         }
 
         private Node CreateNode(string row)
         {
             string[] colums = row.Split(";");
 
-            return new Node
+            try
             {
-                NameEn = colums[0],
-                NameFr = colums[1],
-            };
+                return new Node
+                {
+                    NameEn = colums[0],
+                    NameFr = colums[1],
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message} on node {row}.");
+            }
+
+            return null;
         }
     }
 }

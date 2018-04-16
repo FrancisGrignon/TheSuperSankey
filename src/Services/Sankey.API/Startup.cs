@@ -53,6 +53,11 @@ namespace Sankey.API
                   c.SwaggerEndpoint("/swagger/v1/swagger.json", "TheSuperSankey API V1");
               });
 
+            app.UseDefaultFiles(new DefaultFilesOptions
+            {
+                DefaultFileNames = new string[] { "index.html" }
+            });
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
