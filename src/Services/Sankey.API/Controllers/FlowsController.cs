@@ -38,8 +38,21 @@ namespace Sankey.API.Controllers
                 language = "en";
             }
 
-            var location = await _context.Geos.Where(p => p.Iso3166.Equals(geo)).SingleOrDefaultAsync();
-            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166.Equals(geo) && p.Year.Equals(year) && p.Tag.Equals(tag)).ToArrayAsync();
+            if (true == string.IsNullOrEmpty(geo))
+            {
+                geo = "CA";
+            }
+            else
+            {
+                geo = geo.ToUpper();
+            }
+
+            var patate = _context.Geos.ToArray();
+            var frite = _context.Nodes.ToArray();
+            var graisseuse = _context.Flows.ToArray();
+
+            var location = await _context.Geos.Where(p => p.Iso3166 == geo).SingleOrDefaultAsync();
+            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166 == geo && p.Year == year && p.Tag == tag).ToArrayAsync();
             var model = new FlowViewModel
             {
                 Geo = location?.Name(language),

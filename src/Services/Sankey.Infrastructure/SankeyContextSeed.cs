@@ -45,7 +45,7 @@ namespace Sankey.Infrastructure
 
             return File.ReadAllLines(path)
                 .Skip(1) // skip header row
-                .Select(x => CreateFlow(x, context))
+                .Select(x => CreateFlow(x, logger, context))
                 .Where(x => x != null);
         }
      
@@ -111,14 +111,14 @@ namespace Sankey.Infrastructure
             };
         }
 
-        private Flow CreateFlow(string row, SankeyContext context)
+        private Flow CreateFlow(string row, ILogger<SankeyContext> logger, SankeyContext context)
         {
             string[] colums = row.Split(";");
 
             try
             {
                 var sourceName = colums[0].Trim();
-                var source = context.Nodes.Where(p => p.NameEn.Equals(sourceName)).SingleOrDefault();
+                var source = context.Nodes.Where(p => p.NameEn == sourceName).SingleOrDefault();
 
                 if (null == source)
                 {
@@ -127,10 +127,12 @@ namespace Sankey.Infrastructure
                         NameEn = sourceName,
                         NameFr = sourceName
                     };
+
+                    logger.LogInformation($"Missing source {sourceName}");
                 }
 
                 var targetName = colums[1].Trim();
-                var target = context.Nodes.Where(p => p.NameEn.Equals(targetName)).SingleOrDefault();
+                var target = context.Nodes.Where(p => p.NameEn == targetName).SingleOrDefault();
 
                 if (null == target)
                 {
@@ -139,6 +141,22 @@ namespace Sankey.Infrastructure
                         NameEn = targetName,
                         NameFr = targetName
                     };
+
+                    logger.LogInformation($"Missing target {targetName}");
+                }
+
+                var geoName = colums[4].Trim();
+                var geo = context.Geos.Where(p => p.NameEn == geoName).SingleOrDefault();
+
+                if (null == geo)
+                {
+                    geo = new Geo
+                    {
+                        NameEn = geoName,
+                        NameFr = geoName
+                    };
+
+                    logger.LogInformation($"Missing geo {geoName}");
                 }
 
                 return new Flow
@@ -147,7 +165,7 @@ namespace Sankey.Infrastructure
                     Target = target,
                     Value = Convert.ToInt32(colums[2]),
                     Year = Convert.ToInt32(colums[3]),
-                    Geo = context.Geos.Where(p => p.NameEn.Equals(colums[4])).SingleOrDefault(),
+                    Geo = geo,
                     Tag = colums[5]
                 };
             }
