@@ -5,7 +5,9 @@
     <title>The Super Sankey</title>
 </head>
 <body>
+    <h1><span id="sankey_name">Name</span></h1>
     <div id="sankey_basic" style="width: 900px; height: 600px;"></div>
+    <p><span id="sankey_note">Note</span></p>
 
     <p><a href="swagger">Use Swagger to browse the API.</a></p>
 
@@ -29,6 +31,11 @@
             var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
 
             $.getJSON(uri, function (response) {
+
+                console.info(response);
+                $('#sankey_name').text(response.name);
+                $('#sankey_note').text(response.note);
+
                 var data = new google.visualization.DataTable();
 
                 data.addColumn('string', 'Source');
