@@ -1,20 +1,16 @@
-# escape=`
-FROM sixeyed/msbuild:netfx-4.5.2-webdeploy AS builder
+FROM microsoft/aspnetcore-build:2.0 AS build-env
+WORKDIR /app
 
-WORKDIR C:\src\SignUp.Web
-COPY src\SignUp.Web\packages.config .
-RUN nuget restore packages.config -PackagesDirectory ..\packages
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
 
-COPY src\ C:\src
-RUN msbuild SignUp.Web.csproj /p:OutputPath=c:\out `
-        /p:DeployOnBuild=true /p:VSToolsPath=C:\MSBuild.Microsoft.VisualStudio.Web.targets.14.0.0.3\tools\VSToolsPath
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-# app image
-FROM microsoft/aspnet:windowsservercore
-SHELL ["powershell"]
-
-WORKDIR C:\web-app
-RUN Remove-Website -Name 'Default Web Site';`
-    New-Website -Name 'web-app' -Port 80 -PhysicalPath 'C:\web-app'
-
-COPY --from=builder C:\out\_PublishedWebsites\SignUp.Web C:\web-app
+# Build runtime image
+FROM microsoft/aspnetcore:2.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "Sankey.API.dll"]

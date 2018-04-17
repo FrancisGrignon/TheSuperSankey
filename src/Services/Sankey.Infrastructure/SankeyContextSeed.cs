@@ -26,6 +26,7 @@ namespace Sankey.Infrastructure
             if (false == context.Flows.Any())
             {
                 context.Flows.AddRange(GetFlowsFromFile(contentRootPath, logger, context));
+                context.Flows.AddRange(GetTopLevelFlowsFromFile(contentRootPath, logger, context));                
                 context.SaveChanges();
             }
         }
@@ -40,6 +41,18 @@ namespace Sankey.Infrastructure
 
                 return GetPreconfiguredFlows();
             }
+
+            logger.LogInformation("Flows loaded from file.");
+
+            return File.ReadAllLines(path)
+                .Skip(1) // skip header row
+                .Select(x => CreateFlow(x, logger, context))
+                .Where(x => x != null);
+        }
+
+         private IEnumerable<Flow> GetTopLevelFlowsFromFile(string contentRootPath, ILogger<SankeyContext> logger, SankeyContext context)
+        {
+            string path = Path.Combine(contentRootPath, "Setup", "TopLevel.Flows.csv");
 
             logger.LogInformation("Flows loaded from file.");
 

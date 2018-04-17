@@ -1,0 +1,7 @@
+source;target;quantity;year;geo;tag
+Energy Production;Energy Available;19280;1995;Canada;toplevel
+Imports;Energy Available;3272;1995;Canada;toplevel
+Energy Available;Exports;12188;1995;Canada;toplevel
+Energy Available;Canada Energy Use;15302;1995;Canada;toplevel
+Energy Available;Canada Non-energy;953;1995;Canada;toplevel
+Unknown;Energy Available;2289;1995;Canada;toplevel
