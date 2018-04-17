@@ -1,0 +1,16 @@
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\bin\Debug\netcoreapp2.0\Sankey.Domain.deps.json
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\bin\Debug\netcoreapp2.0\Sankey.Domain.dll
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\bin\Debug\netcoreapp2.0\Sankey.Domain.pdb
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.csproj.CoreCompileInputs.cache
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.AssemblyInfoInputs.cache
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.AssemblyInfo.cs
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.dll
+C:\source\repos\TheSuperSankey\src\Services\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.pdb
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\bin\Debug\netcoreapp2.0\Sankey.Domain.deps.json
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\bin\Debug\netcoreapp2.0\Sankey.Domain.dll
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\bin\Debug\netcoreapp2.0\Sankey.Domain.pdb
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.csproj.CoreCompileInputs.cache
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.AssemblyInfoInputs.cache
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.AssemblyInfo.cs
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.dll
+C:\source\repos\TheSuperSankey\src\Services\Sankey.API\Sankey.Domain\obj\Debug\netcoreapp2.0\Sankey.Domain.pdb

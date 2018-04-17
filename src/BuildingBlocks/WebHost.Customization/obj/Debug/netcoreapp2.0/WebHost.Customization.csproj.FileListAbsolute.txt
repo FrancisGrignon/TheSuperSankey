@@ -1,0 +1,8 @@
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\bin\Debug\netcoreapp2.0\WebHost.Customization.deps.json
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\bin\Debug\netcoreapp2.0\WebHost.Customization.dll
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\bin\Debug\netcoreapp2.0\WebHost.Customization.pdb
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\obj\Debug\netcoreapp2.0\WebHost.Customization.csproj.CoreCompileInputs.cache
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\obj\Debug\netcoreapp2.0\WebHost.Customization.AssemblyInfoInputs.cache
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\obj\Debug\netcoreapp2.0\WebHost.Customization.AssemblyInfo.cs
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\obj\Debug\netcoreapp2.0\WebHost.Customization.dll
+C:\source\repos\TheSuperSankey\src\BuildingBlocks\WebHost.Customization\obj\Debug\netcoreapp2.0\WebHost.Customization.pdb

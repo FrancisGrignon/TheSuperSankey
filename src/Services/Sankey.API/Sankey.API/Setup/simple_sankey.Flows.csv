@@ -1,0 +1,11 @@
+Source;Target;Value;GEO;Year;Tag
+Energy Production;Total Energy Input;19709;Canada;2016;Simple-Sankey
+Total Energy Inputs;Final Use;7953;Canada;2016;Simple-Sankey
+Total Energy Inputs;Energy Exports;12507;Canada;2016;Simple-Sankey
+Energy Imports;Total Energy Input;3659;Canada;2016;Simple-Sankey
+Total Energy Inputs;Non-energy use;1039;Canada;2016;Simple-Sankey
+Other Inputs;Total Energy Inputs;715;Canada;2016;Simple-Sankey
+Total Energy Inputs;Producer consumption;1431;Canada;2016;Simple-Sankey
+Total Energy Inputs;Statistical difference;324;Canada;2016;Simple-Sankey
+Total Energy Inputs;Stocks;49;Canada;2016;Simple-Sankey
+Total Energy Inputs;Transformations;5791;Canada;2016;Simple-Sankey
