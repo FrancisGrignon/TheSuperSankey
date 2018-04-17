@@ -4,5 +4,5 @@ services:
 
   sankey-api:
     build:
-      context: ./Services/Sankey.API
-      dockerfile: ./Services/Sankey.API/Dockerfile
+      context: ./Services/Sankey.API/
+      dockerfile: ./Dockerfile
