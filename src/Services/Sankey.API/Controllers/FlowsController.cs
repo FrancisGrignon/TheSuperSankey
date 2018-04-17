@@ -50,12 +50,16 @@ namespace Sankey.API.Controllers
             var patate = _context.Geos.ToArray();
             var frite = _context.Nodes.ToArray();
             var graisseuse = _context.Flows.ToArray();
+            var avec = _context.Tables.ToArray();
 
             var location = await _context.Geos.Where(p => p.Iso3166 == geo).SingleOrDefaultAsync();
-            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166 == geo && p.Year == year && p.Tag == tag).ToArrayAsync();
+            var table = await _context.Tables.Where(p => p.Tag == tag).SingleOrDefaultAsync();      
+            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166 == geo && p.Year == year && p.Table.Tag == tag).ToArrayAsync();
             var model = new FlowViewModel
             {
                 Geo = location?.Name(language),
+                Name = table?.Name(language),
+                Note = table?.NoteEn,
                 Tag = tag,
                 Year = year,
                 Data = flows.Select(p => new object[3] { p.Source.Name(language), p.Target.Name(language), p.Value })

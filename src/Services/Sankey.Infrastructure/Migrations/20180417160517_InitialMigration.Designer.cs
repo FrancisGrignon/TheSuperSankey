@@ -11,8 +11,8 @@ using System;
 namespace Sankey.Infrastructure.Migrations
 {
     [DbContext(typeof(SankeyContext))]
-    [Migration("20180413043107_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180417160517_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,9 +30,9 @@ namespace Sankey.Infrastructure.Migrations
 
                     b.Property<int>("SourceId");
 
-                    b.Property<string>("Tag")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<int>("TableId");
+
+                    b.Property<int?>("TableId1");
 
                     b.Property<int>("TargetId");
 
@@ -45,6 +45,10 @@ namespace Sankey.Infrastructure.Migrations
                     b.HasIndex("GeoId");
 
                     b.HasIndex("SourceId");
+
+                    b.HasIndex("TableId");
+
+                    b.HasIndex("TableId1");
 
                     b.HasIndex("TargetId");
 
@@ -91,6 +95,36 @@ namespace Sankey.Infrastructure.Migrations
                     b.ToTable("Node");
                 });
 
+            modelBuilder.Entity("Sankey.Domain.Models.Table", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("NameFr")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("NoteEn")
+                        .IsRequired()
+                        .HasMaxLength(8192);
+
+                    b.Property<string>("NoteFr")
+                        .IsRequired()
+                        .HasMaxLength(8192);
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Table");
+                });
+
             modelBuilder.Entity("Sankey.Domain.Models.Flow", b =>
                 {
                     b.HasOne("Sankey.Domain.Models.Geo", "Geo")
@@ -102,6 +136,15 @@ namespace Sankey.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Sankey.Domain.Models.Table", "Table")
+                        .WithMany()
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Sankey.Domain.Models.Table")
+                        .WithMany("Flows")
+                        .HasForeignKey("TableId1");
 
                     b.HasOne("Sankey.Domain.Models.Node", "Target")
                         .WithMany()

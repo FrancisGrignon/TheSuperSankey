@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Sankey.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,6 +39,23 @@ namespace Sankey.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Table",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    NameEn = table.Column<string>(maxLength: 255, nullable: false),
+                    NameFr = table.Column<string>(maxLength: 255, nullable: false),
+                    NoteEn = table.Column<string>(maxLength: 8192, nullable: false),
+                    NoteFr = table.Column<string>(maxLength: 8192, nullable: false),
+                    Tag = table.Column<string>(maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Table", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Flow",
                 columns: table => new
                 {
@@ -46,7 +63,8 @@ namespace Sankey.Infrastructure.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     GeoId = table.Column<int>(nullable: false),
                     SourceId = table.Column<int>(nullable: false),
-                    Tag = table.Column<string>(maxLength: 255, nullable: false),
+                    TableId = table.Column<int>(nullable: false),
+                    TableId1 = table.Column<int>(nullable: true),
                     TargetId = table.Column<int>(nullable: false),
                     Value = table.Column<int>(nullable: false),
                     Year = table.Column<int>(nullable: false)
@@ -64,6 +82,18 @@ namespace Sankey.Infrastructure.Migrations
                         name: "FK_Flow_Node_SourceId",
                         column: x => x.SourceId,
                         principalTable: "Node",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Flow_Table_TableId",
+                        column: x => x.TableId,
+                        principalTable: "Table",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Flow_Table_TableId1",
+                        column: x => x.TableId1,
+                        principalTable: "Table",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -85,6 +115,16 @@ namespace Sankey.Infrastructure.Migrations
                 column: "SourceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Flow_TableId",
+                table: "Flow",
+                column: "TableId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flow_TableId1",
+                table: "Flow",
+                column: "TableId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Flow_TargetId",
                 table: "Flow",
                 column: "TargetId");
@@ -100,6 +140,9 @@ namespace Sankey.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Node");
+
+            migrationBuilder.DropTable(
+                name: "Table");
         }
     }
 }

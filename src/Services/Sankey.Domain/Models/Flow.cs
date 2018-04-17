@@ -20,6 +20,8 @@
 
         public int Year { get; set; }
 
-        public string Tag { get; set; }
+        public Table Table { get; set; }
+
+        public int TableId { get; set; }
     }
 }

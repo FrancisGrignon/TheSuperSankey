@@ -23,28 +23,30 @@ namespace Sankey.Infrastructure
                 context.SaveChanges();
             }
 
+            if (false == context.Tables.Any())
+            {
+                context.Tables.AddRange(GetTablesFromFile(contentRootPath, logger));
+                context.SaveChanges();
+            }
+
             if (false == context.Flows.Any())
             {
-                context.Flows.AddRange(GetFlowsFromFile(contentRootPath, logger, context));
-                context.Flows.AddRange(GetTopLevelFlowsFromFile(contentRootPath, logger, context));                
-                context.SaveChanges();
+                var setupPath = Path.Combine(contentRootPath, "Setup");
+                var flowPaths = Directory.GetFiles(setupPath).Where(p => p.Contains("Flow"));
+
+                foreach (var path in flowPaths)
+                {
+                    context.Flows.AddRange(GetFlowsFromPath(path, logger, context));
+                    context.SaveChanges();
+                }                
             }
         }
 
-        private IEnumerable<Flow> GetFlowsFromFile(string contentRootPath, ILogger<SankeyContext> logger, SankeyContext context)
+        private IEnumerable<Flow> GetFlowsFromPath(string contentPath, ILogger<SankeyContext> logger, SankeyContext context)
         {
-            string path = Path.Combine(contentRootPath, "Setup", "Flows.csv");
+            logger.LogInformation($"Flows loaded from {contentPath}.");
 
-            if (false == File.Exists(path))
-            {
-                logger.LogInformation("Flows loaded from preconfigured values.");
-
-                return GetPreconfiguredFlows();
-            }
-
-            logger.LogInformation("Flows loaded from file.");
-
-            return File.ReadAllLines(path)
+            return File.ReadAllLines(contentPath)
                 .Skip(1) // skip header row
                 .Select(x => CreateFlow(x, logger, context))
                 .Where(x => x != null);
@@ -66,13 +68,6 @@ namespace Sankey.Infrastructure
         {
             string path = Path.Combine(contentRootPath, "Setup", "Geos.csv");
 
-            if (false == File.Exists(path))
-            {
-                logger.LogInformation("Geos loaded from preconfigured values.");
-
-                return GetPreconfiguredGeos();
-            }
-
             logger.LogInformation("Geos loaded from file.");
 
             return File.ReadAllLines(path)
@@ -85,13 +80,6 @@ namespace Sankey.Infrastructure
         {
             string path = Path.Combine(contentRootPath, "Setup", "Nodes.csv");
 
-            if (false == File.Exists(path))
-            {
-                logger.LogInformation("Nodes loaded from preconfigured values.");
-
-                return GetPreconfiguredNodes();
-            }
-
             logger.LogInformation("Nodes loaded from file.");
 
             return File.ReadAllLines(path)
@@ -99,29 +87,17 @@ namespace Sankey.Infrastructure
                 .Select(x => CreateNode(x))
                 .Where(x => x != null);
         }
-
-        private IEnumerable<Flow> GetPreconfiguredFlows()
+         
+        private IEnumerable<Table> GetTablesFromFile(string contentRootPath, ILogger<SankeyContext> logger)
         {
-            return new List<Flow>()
-            {
-                new Flow { GeoId = 1, SourceId = 1, TargetId = 2, Value = 1, Year = 2018 }
-            };
-        } 
+            string path = Path.Combine(contentRootPath, "Setup", "Tables.csv");
 
-        private IEnumerable<Geo> GetPreconfiguredGeos()
-        {
-            return new List<Geo>()
-            {
-                new Geo { NameEn = "Canada", NameFr = "Canada" }
-            };
-        }
+            logger.LogInformation("Tables loaded from file.");
 
-        private IEnumerable<Node> GetPreconfiguredNodes()
-        {
-            return new List<Node>()
-            {
-                new Node { NameEn = "Petrolium", NameFr = "Pétrole" }
-            };
+            return File.ReadAllLines(path)
+                .Skip(1) // skip header row
+                .Select(x => CreateTable(x))
+                .Where(x => x != null);
         }
 
         private Flow CreateFlow(string row, ILogger<SankeyContext> logger, SankeyContext context)
@@ -172,6 +148,23 @@ namespace Sankey.Infrastructure
                     logger.LogInformation($"Missing geo {geoName}");
                 }
 
+                var tableTag = colums[5].Trim();
+                var table = context.Tables.Where(p => p.Tag == tableTag).SingleOrDefault();
+
+                if (null == table)
+                {
+                    table = new Table
+                    {
+                        NameEn = tableTag,
+                        NameFr = tableTag,
+                        NoteEn = "Notes",
+                        NoteFr = "Notes",
+                        Tag = tableTag
+                    };
+
+                    logger.LogInformation($"Missing table {tableTag}");
+                }
+
                 return new Flow
                 {
                     Source = source,
@@ -179,7 +172,7 @@ namespace Sankey.Infrastructure
                     Value = Convert.ToInt32(colums[2]),
                     Year = Convert.ToInt32(colums[3]),
                     Geo = geo,
-                    Tag = colums[5]
+                    Table = table
                 };
             }
             catch (Exception ex)
@@ -226,6 +219,29 @@ namespace Sankey.Infrastructure
             catch (Exception ex)
             {
                 Console.WriteLine($"{ex.Message} on node {row}.");
+            }
+
+            return null;
+        }
+
+         private Table CreateTable(string row)
+        {
+            string[] colums = row.Split(";");
+
+            try
+            {
+                return new Table
+                {
+                    NameEn = colums[0],
+                    NameFr = colums[1],
+                    Tag = colums[2],
+                    NoteEn = colums[3],
+                    NoteFr = colums[4],
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message} on table {row}.");
             }
 
             return null;

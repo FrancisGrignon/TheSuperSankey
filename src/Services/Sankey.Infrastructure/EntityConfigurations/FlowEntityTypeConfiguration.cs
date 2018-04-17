@@ -27,6 +27,11 @@ namespace Sankey.Infrastructure.EntityConfigurations
                 .HasForeignKey(ci => ci.TargetId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(ci => ci.Table)
+                .WithMany()
+                .HasForeignKey(ci => ci.TableId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(ci => ci.Id)
                 .IsRequired();
 
@@ -35,10 +40,6 @@ namespace Sankey.Infrastructure.EntityConfigurations
 
             builder.Property(ci => ci.Year)
                 .IsRequired();
-
-            builder.Property(ci => ci.Tag)
-                .IsRequired(true)
-                .HasMaxLength(255);
         }
     }
 }
