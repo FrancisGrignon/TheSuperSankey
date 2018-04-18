@@ -10,9 +10,10 @@ namespace Web.Controllers
 {
     public class SuperController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string geography="ca", int year=2016)
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewBag.Geography = geography;
+            ViewBag.Year = year;
 
             return View();
         }

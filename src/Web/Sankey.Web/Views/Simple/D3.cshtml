@@ -10,8 +10,7 @@
     </div>
     <div class="col-md-2">
         <h2>Year</h2>
-        <ul>            
-            <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="@ViewBag.Geography" asp-route-year="1995">1995</a></li>
+        <ul>
             <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="@ViewBag.Geography" asp-route-year="1996">1996</a></li>
             <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="@ViewBag.Geography" asp-route-year="1997">1997</a></li>
             <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="@ViewBag.Geography" asp-route-year="1998">1998</a></li>
@@ -41,6 +40,7 @@
         <h2>Geography</h2>
         <ul>
             <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="ca"    asp-route-year="@ViewBag.Year">Canada</a></li>
+            <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="ca-qc" asp-route-year="@ViewBag.Year">Québec</a></li>
             <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="ca-ab" asp-route-year="@ViewBag.Year">Alberta</a></li>
             <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="ca-bc" asp-route-year="@ViewBag.Year">British Columbia</a></li>
             <li><a asp-area="" asp-controller="Simple" asp-action="Index" asp-route-geography="ca-mb" asp-route-year="@ViewBag.Year">Manitoba</a></li>
@@ -96,3 +96,86 @@
         });
     }
 </script>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://unpkg.com/d3-sankey@0.6"></script>
+<script>
+
+var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+var formatNumber = d3.format(",.0f"),
+    format = function(d) { return formatNumber(d) + " TWh"; },
+    color = d3.scaleOrdinal(d3.schemeCategory10);
+
+var sankey = d3.sankey()
+    .nodeWidth(15)
+    .nodePadding(10)
+    .extent([[1, 1], [width - 1, height - 6]]);
+
+var link = svg.append("g")
+    .attr("class", "links")
+    .attr("fill", "none")
+    .attr("stroke", "#000")
+    .attr("stroke-opacity", 0.2)
+  .selectAll("path");
+
+var node = svg.append("g")
+    .attr("class", "nodes")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", 10)
+  .selectAll("g");
+
+
+   
+var uri = 'http://localhost:8080/api/flows/en/simple-sankey/@ViewBag.Geography/@ViewBag.Year';
+
+
+$.getJSON(uri, function (response) {
+
+  console.info(response);
+
+  $('#sankey_geography').text(response.geography);
+  $('#sankey_year').text(response.year);
+  $('#sankey_note').text(response.note);
+      
+  sankey(response.data);
+
+  link = link
+    .data(energy.links)
+    .enter().append("path")
+      .attr("d", d3.sankeyLinkHorizontal())
+      .attr("stroke-width", function(d) { return Math.max(1, d.width); });
+
+  link.append("title")
+      .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+
+  node = node
+    .data(energy.nodes)
+    .enter().append("g");
+
+  node.append("rect")
+      .attr("x", function(d) { return d.x0; })
+      .attr("y", function(d) { return d.y0; })
+      .attr("height", function(d) { return d.y1 - d.y0; })
+      .attr("width", function(d) { return d.x1 - d.x0; })
+      .attr("fill", function(d) { return color(d.name.replace(/ .*/, "")); })
+      .attr("stroke", "#000");
+
+  node.append("text")
+      .attr("x", function(d) { return d.x0 - 6; })
+      .attr("y", function(d) { return (d.y1 + d.y0) / 2; })
+      .attr("dy", "0.35em")
+      .attr("text-anchor", "end")
+      .text(function(d) { return d.name; })
+    .filter(function(d) { return d.x0 < width / 2; })
+      .attr("x", function(d) { return d.x1 + 6; })
+      .attr("text-anchor", "start");
+
+  node.append("title")
+      .text(function(d) { return d.name + "\n" + format(d.value); });
+});
+
+</script>
+

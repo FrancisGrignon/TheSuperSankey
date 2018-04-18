@@ -11,9 +11,17 @@ services:
   sankey-web:
     image: sankey-web:v1
     ports:
-      - "80:80"
+      - "8081:80"
     networks:
-      - sankey-net      
+      - sankey-net    
+  sankey-nginx:
+    image: sankey-nginx:v1
+    ports:
+    - mode: host
+      published: 80
+      target: 80
+    networks:
+      - sankey-net           
 
 networks:
   sankey-net:

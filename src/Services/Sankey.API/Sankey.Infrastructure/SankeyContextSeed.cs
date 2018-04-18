@@ -100,6 +100,33 @@ namespace Sankey.Infrastructure
                 .Where(x => x != null);
         }
 
+        Dictionary<string, Node> nodeCache = new Dictionary<string, Node>(StringComparer.OrdinalIgnoreCase);
+
+        private Node GetOrAddNode(string nodeName, ILogger<SankeyContext> logger, SankeyContext context)
+        {
+            Node node;
+
+            if (false == nodeCache.TryGetValue(nodeName, out node))
+            {
+                node = context.Nodes.Where(p => p.NameEn == nodeName).SingleOrDefault();
+
+                if (null == node)
+                {
+                    node = new Node
+                    {
+                        NameEn = nodeName,
+                        NameFr = nodeName
+                    };
+
+                    logger.LogInformation($"Missing node {nodeName}");
+                }
+
+                nodeCache.TryAdd(nodeName, node);
+            }
+
+            return node;
+        }
+
         private Flow CreateFlow(string row, ILogger<SankeyContext> logger, SankeyContext context)
         {
             string[] colums = row.Split(";");
@@ -107,33 +134,11 @@ namespace Sankey.Infrastructure
             try
             {
                 var sourceName = colums[0].Trim();
-                var source = context.Nodes.Where(p => p.NameEn == sourceName).SingleOrDefault();
-
-                if (null == source)
-                {
-                    source = new Node
-                    {
-                        NameEn = sourceName,
-                        NameFr = sourceName
-                    };
-
-                    logger.LogInformation($"Missing source {sourceName}");
-                }
-
+                var source = GetOrAddNode(sourceName, logger, context);
+                
                 var targetName = colums[1].Trim();
-                var target = context.Nodes.Where(p => p.NameEn == targetName).SingleOrDefault();
-
-                if (null == target)
-                {
-                    target = new Node
-                    {
-                        NameEn = targetName,
-                        NameFr = targetName
-                    };
-
-                    logger.LogInformation($"Missing target {targetName}");
-                }
-
+                var target = GetOrAddNode(targetName, logger, context);
+                
                 var geoName = colums[3].Trim();
                 var geo = context.Geos.Where(p => p.NameEn == geoName).SingleOrDefault();
 

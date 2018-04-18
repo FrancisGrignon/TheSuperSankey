@@ -10,3 +10,7 @@ services:
     build:
       context: ./Web/Sankey.Web/
       dockerfile: ./Dockerfile   
+  sankey-nginx:
+    build:
+      context: ./Web/Sankey.Nginx/
+      dockerfile: ./Dockerfile   
