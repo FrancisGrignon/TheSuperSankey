@@ -16,4 +16,5 @@ RUN dotnet publish -c Release -o out
 FROM microsoft/aspnetcore:2.0
 WORKDIR /app
 COPY --from=build-env /src/Sankey.API/out .
+COPY --from=build-env /src/Sankey.API/Setup ./Setup
 ENTRYPOINT ["dotnet", "Sankey.API.dll"]

@@ -30,21 +30,21 @@ namespace Sankey.API.Controllers
         }
 
         // GET api/flows/en/root/ca-qc/2015
-        [HttpGet("{language}/{tag}/{geo}/{year:int}")]
-        public async Task<FlowViewModel> Get(string language, string tag, string geo, int year)
+        [HttpGet("{language}/{tag}/{geography}/{year:int}")]
+        public async Task<FlowViewModel> Get(string language, string tag, string geography, int year)
         {
             if (false == "fr".Equals(language))
             {
                 language = "en";
             }
 
-            if (true == string.IsNullOrEmpty(geo))
+            if (true == string.IsNullOrEmpty(geography))
             {
-                geo = "CA";
+                geography = "ca";
             }
             else
             {
-                geo = geo.ToUpper();
+                geography = geography.ToLower();
             }
 
             if (true == string.IsNullOrEmpty(tag))
@@ -61,12 +61,12 @@ namespace Sankey.API.Controllers
             var graisseuse = _context.Flows.ToArray();
             var avec = _context.Tables.ToArray();
 
-            var location = await _context.Geos.Where(p => p.Iso3166 == geo).SingleOrDefaultAsync();
+            var location = await _context.Geos.Where(p => p.Iso3166 == geography).SingleOrDefaultAsync();
             var table = await _context.Tables.Where(p => p.Tag == tag).SingleOrDefaultAsync();      
-            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166 == geo && p.Year == year && p.Table.Tag == tag).ToArrayAsync();
+            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166 == geography && p.Year == year && p.Table.Tag == tag).ToArrayAsync();
             var model = new FlowViewModel
             {
-                Geo = location?.Name(language),
+                Geography = location?.Name(language),
                 Name = table?.Name(language),
                 Note = table?.NoteEn,
                 Tag = tag,

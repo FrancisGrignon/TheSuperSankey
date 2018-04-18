@@ -134,7 +134,7 @@ namespace Sankey.Infrastructure
                     logger.LogInformation($"Missing target {targetName}");
                 }
 
-                var geoName = colums[4].Trim();
+                var geoName = colums[3].Trim();
                 var geo = context.Geos.Where(p => p.NameEn == geoName).SingleOrDefault();
 
                 if (null == geo)
@@ -170,7 +170,7 @@ namespace Sankey.Infrastructure
                     Source = source,
                     Target = target,
                     Value = Convert.ToInt32(colums[2]),
-                    Year = Convert.ToInt32(colums[3]),
+                    Year = Convert.ToInt32(colums[4]),
                     Geo = geo,
                     Table = table
                 };
@@ -193,7 +193,7 @@ namespace Sankey.Infrastructure
                 {
                     NameEn = colums[0],
                     NameFr = colums[1],
-                    Iso3166 = colums[2],
+                    Iso3166 = colums[2].ToLower(),
                 };
             }
             catch (Exception ex)

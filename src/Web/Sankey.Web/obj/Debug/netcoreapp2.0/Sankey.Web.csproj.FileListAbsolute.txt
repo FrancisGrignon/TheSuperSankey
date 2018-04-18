@@ -1,0 +1,10 @@
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\bin\Debug\netcoreapp2.0\Sankey.Web.deps.json
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\bin\Debug\netcoreapp2.0\Sankey.Web.runtimeconfig.json
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\bin\Debug\netcoreapp2.0\Sankey.Web.runtimeconfig.dev.json
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\bin\Debug\netcoreapp2.0\Sankey.Web.dll
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\bin\Debug\netcoreapp2.0\Sankey.Web.pdb
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\obj\Debug\netcoreapp2.0\Sankey.Web.csproj.CoreCompileInputs.cache
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\obj\Debug\netcoreapp2.0\Sankey.Web.AssemblyInfoInputs.cache
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\obj\Debug\netcoreapp2.0\Sankey.Web.AssemblyInfo.cs
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\obj\Debug\netcoreapp2.0\Sankey.Web.dll
+C:\source\repos\TheSuperSankey\src\Web\Sankey.Web\obj\Debug\netcoreapp2.0\Sankey.Web.pdb
