@@ -5,9 +5,15 @@ services:
   sankey-api:
     image: sankey-api:v1
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       - sankey-net
+  sankey-web:
+    image: sankey-web:v1
+    ports:
+      - "80:80"
+    networks:
+      - sankey-net      
 
 networks:
   sankey-net:

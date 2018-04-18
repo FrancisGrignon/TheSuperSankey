@@ -6,3 +6,7 @@ services:
     build:
       context: ./Services/Sankey.API/
       dockerfile: ./Dockerfile
+  sankey-web:  
+    build:
+      context: ./Web/Sankey.Web/
+      dockerfile: ./Dockerfile   
