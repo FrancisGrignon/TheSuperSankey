@@ -17,9 +17,10 @@ services:
   sankey-nginx:
     image: grignon/sankey-nginx:v1
     ports:
-    - mode: host
-      published: 80
-      target: 80
+    - "80:80"
+    depends_on:
+      - sankey-api
+      - sankey-web     
     networks:
       - sankey-net           
 
