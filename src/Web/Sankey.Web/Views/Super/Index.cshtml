@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <h1>Super Sankey for <span id="sankey_geography">Geography</span> in <span id="sankey_year">Year</span> in petajoules</h1>
+        <h2>Super Sankey for <span id="sankey_geography">Geography</span> in <span id="sankey_year">Year</span> in petajoules</h2>
         <div id="sankey_basic" style="width: 900px; height: 600px;"></div>
         <p><span id="sankey_note">Note</span></p>
     </div>
@@ -73,6 +73,23 @@
         // Sets chart options.
         var options = {
             width: 600,
+            sankey: {
+                iterations: 64,
+                node: {
+                    label: {
+                        fontName: 'Futura',
+                        fontSize: 12,
+                        color: '#000',
+                        bold: true,
+                        italic: false
+                    },
+                    interactivity: true, // Allows you to select nodes.
+                    labelPadding: 6,     // Horizontal distance between the label and the node.
+                    nodePadding: 20,     // Vertical distance between nodes.
+                    width: 10,            // Thickness of the node.
+                },
+                link: { color: { stroke: 'black', strokeWidth: 1} },
+            }
         };
 
         // Instantiates and draws our chart, passing in some options.

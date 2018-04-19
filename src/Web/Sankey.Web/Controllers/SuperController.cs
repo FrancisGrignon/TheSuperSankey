@@ -18,6 +18,14 @@ namespace Web.Controllers
             return View();
         }
 
+        public IActionResult D3(string geography="ca", int year=2016)
+        {
+            ViewBag.Geography = geography;
+            ViewBag.Year = year;
+
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
