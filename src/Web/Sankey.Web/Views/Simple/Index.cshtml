@@ -67,7 +67,7 @@
     google.charts.load('current', { 'packages': ['sankey'] });
     google.charts.setOnLoadCallback(drawChart);
     
-    var uri = 'http://localhost:8080/api/flows/en/simple-sankey/@ViewBag.Geography/@ViewBag.Year';
+    var uri = '/api/flows/en/simple-sankey/@ViewBag.Geography/@ViewBag.Year';
 
     function drawChart() {
         // Sets chart options.

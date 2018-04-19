@@ -3,19 +3,19 @@ version: '3.3'
 services:
 
   sankey-api:
-    image: sankey-api:v1
+    image: grignon/sankey-api:v1
     ports:
       - "8080:80"
     networks:
       - sankey-net
   sankey-web:
-    image: sankey-web:v1
+    image: grignon/sankey-web:v1
     ports:
       - "8081:80"
     networks:
       - sankey-net    
   sankey-nginx:
-    image: sankey-nginx:v1
+    image: grignon/sankey-nginx:v1
     ports:
     - mode: host
       published: 80
