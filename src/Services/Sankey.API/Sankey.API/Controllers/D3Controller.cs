@@ -2,19 +2,21 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Sankey.API.ViewModels;
+using Sankey.Domain.Models;
 using Sankey.Infrastructure;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sankey.API.Controllers
 {
     [Route("api/[controller]")]
-    public class FlowsController : Controller
+    public class D3Controller : Controller
     {
         private readonly SankeyContext _context;
         private readonly SankeySettings _settings;
 
-        public FlowsController(SankeyContext context, IOptionsSnapshot<SankeySettings> settings)
+        public D3Controller(SankeyContext context, IOptionsSnapshot<SankeySettings> settings)
         {
             _context = context;
             _settings = settings.Value;
@@ -24,14 +26,14 @@ namespace Sankey.API.Controllers
 
         // GET api/flows
         [HttpGet]
-        public async Task<FlowViewModel> Get()
+        public async Task<D3ViewModel> Get()
         {
             return await Get("en", "simple-sankey", "ca", 2015);
         }
 
         // GET api/flows/en/root/ca-qc/2015
         [HttpGet("{language}/{tag}/{geography}/{year:int}")]
-        public async Task<FlowViewModel> Get(string language, string tag, string geography, int year)
+        public async Task<D3ViewModel> Get(string language, string tag, string geography, int year)
         {
             if (false == "fr".Equals(language))
             {
@@ -58,15 +60,45 @@ namespace Sankey.API.Controllers
 
             var location = await _context.Geos.Where(p => p.Iso3166 == geography).SingleOrDefaultAsync();
             var table = await _context.Tables.Where(p => p.Tag == tag).SingleOrDefaultAsync();      
-            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166 == geography && p.Year == year && p.Table.Tag == tag).ToArrayAsync();
-            var model = new FlowViewModel
+            var flows = await _context.Flows.Include(p => p.Source).Include(p => p.Target).Where(p => p.Geo.Iso3166 == geography && p.Year == year && p.Table.Tag == tag).OrderByDescending(p => p.Value).ToArrayAsync();
+
+            var cache = new Dictionary<int, Node>();
+
+            Node temp;
+
+            foreach (var flow in flows)
+            {
+               if (false == cache.TryGetValue(flow.Source.Id, out temp))
+               {
+                   cache.Add(flow.Source.Id, flow.Source);
+               }
+
+               if (false == cache.TryGetValue(flow.Target.Id, out temp))
+               {
+                   cache.Add(flow.Target.Id, flow.Target);
+               }
+            }
+   
+            var model = new D3ViewModel
             {
                 Geography = location?.Name(language),
                 Name = table?.Name(language),
                 Note = table?.NoteEn,
                 Tag = tag,
                 Year = year,
-                Data = flows.Select(p => new object[3] { p.Source.Name(language), p.Target.Name(language), p.Value })
+                Data = new D3SankeyViewModel
+                {
+                    Nodes = cache.Values.Select(p => new D3NodeViewModel 
+                    { 
+                        Id = p.Name(language) 
+                    }),
+                    Links = flows.Select(p => new D3LinkViewModel 
+                    { 
+                        Source = p.Source.Name(language), 
+                        Target = p.Target.Name(language), 
+                        Value = p.Value
+                    })
+                } 
             };
 
 //{
